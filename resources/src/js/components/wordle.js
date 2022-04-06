@@ -316,9 +316,7 @@ var Wordle = {
 
                 stats += self.stats.progress.map(function (row) {
                     return row.join('') + '\n';
-                }).join('') + '\n';
-
-                stats += 'https://lorddashme.github.io/'
+                }).join('');
 
                 navigator.clipboard.writeText(stats);
 
