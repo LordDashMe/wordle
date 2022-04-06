@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- STANDARD HTML PAGE CONFIGURATION -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- PAGE MAIN DETAILS -->
+    <title>WordleJS - By LordDashMe</title>
+    <meta name="description" content="A simplified and pure JS implementation of Wordle." />
+    <link rel="canonical" href="/" />
+    <!-- OPEN-GRAPH META DETAILS -->
+    <meta name="og:type" content="website" />
+    <meta name="og:url" content="/" />
+    <meta name="og:title" content="WordleJS - By LordDashMe" />
+    <meta name="og:image" content="" />
+    <meta name="og:description" content="A simplified and pure JS implementation of Wordle." />
+    <!-- TWITTER META DETAILS -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="WordleJS - By LordDashMe" />
+    <meta name="twitter:description" content="A simplified and pure JS implementation of Wordle." />
+    <meta name="twitter:image" content="" />
+    <link rel="stylesheet" href="resources/dist/css/commons/global.min.css" />
+    <link rel="stylesheet" href="resources/dist/css/commons/animation.min.css" />
+    <link rel="stylesheet" href="resources/dist/css/components/wordle.min.css" />
+    <link rel="stylesheet" href="resources/dist/css/pages/wordle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <div class="wjs">
+        <h1>WordleJS - By LordDashMe</h1>
+        <p>A simplified and pure JS implementation of Wordle.</p>
+        <div id="wjs_game_board" class="wjs-game-board"></div>
+        <div id="wjs_keyboard" class="wjs-keyboard">
+            <div class="wjs-keyboard-row">
+                <button class="wjs-keyboard-row__keypad">q</button>
+                <button class="wjs-keyboard-row__keypad">w</button>
+                <button class="wjs-keyboard-row__keypad">e</button>
+                <button class="wjs-keyboard-row__keypad">r</button>
+                <button class="wjs-keyboard-row__keypad">t</button>
+                <button class="wjs-keyboard-row__keypad">y</button>
+                <button class="wjs-keyboard-row__keypad">u</button>
+                <button class="wjs-keyboard-row__keypad">i</button>
+                <button class="wjs-keyboard-row__keypad">o</button>
+                <button class="wjs-keyboard-row__keypad">p</button>
+            </div>
+            <div class="wjs-keyboard-row">
+                <button class="wjs-keyboard-row__keypad">a</button>
+                <button class="wjs-keyboard-row__keypad">s</button>
+                <button class="wjs-keyboard-row__keypad">d</button>
+                <button class="wjs-keyboard-row__keypad">f</button>
+                <button class="wjs-keyboard-row__keypad">g</button>
+                <button class="wjs-keyboard-row__keypad">h</button>
+                <button class="wjs-keyboard-row__keypad">j</button>
+                <button class="wjs-keyboard-row__keypad">k</button>
+                <button class="wjs-keyboard-row__keypad">l</button>
+            </div>
+            <div class="wjs-keyboard-row">
+                <button class="wjs-keyboard-row__keypad">Enter</button>
+                <button class="wjs-keyboard-row__keypad">z</button>
+                <button class="wjs-keyboard-row__keypad">x</button>
+                <button class="wjs-keyboard-row__keypad">c</button>
+                <button class="wjs-keyboard-row__keypad">v</button>
+                <button class="wjs-keyboard-row__keypad">b</button>
+                <button class="wjs-keyboard-row__keypad">n</button>
+                <button class="wjs-keyboard-row__keypad">m</button>
+                <button class="wjs-keyboard-row__keypad">Del</button>
+            </div>
+        </div>
+        <div class="wjs-share-container">
+            <div id="wjs_share" class="wjs-share -hide-element">SHARE</div>
+        </div>
+    </div>
+    <script src="resources/dist/js/commons/global.min.js"></script>
+    <script src="resources/dist/js/commons/words.min.js"></script>
+    <script src="resources/dist/js/components/wordle.min.js"></script>
+    <script src="resources/dist/js/pages/wordle.min.js"></script>
+</body>
+</html>

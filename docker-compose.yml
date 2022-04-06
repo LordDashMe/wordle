@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  app:
+    container_name: 'wordlejs_http'
+    tty: true
+    stdin_open: true
+    image: 'php:7.2-apache'
+    volumes:
+      - '.:/var/www/html/'
+  resources:
+    container_name: 'wordlejs_resources'
+    tty: true
+    stdin_open: true
+    image: 'node:10-alpine'
+    volumes:
+      - './resources/:/var/www/resources/'

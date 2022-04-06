@@ -1,0 +1,68 @@
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+   
+.wjs-game-board {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wjs-game-board-letter-container {
+    display: flex;
+}
+
+.wjs-game-board-letter-item {
+    border: 2px solid gray;
+    border-radius: 3px;
+    margin: 2px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.-filled {
+    border: 2px solid black;
+}
+
+.wjs-keyboard {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wjs-keyboard div {
+    display: flex;
+    margin: 4px 0;
+}
+
+.wjs-keyboard-row__keypad {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    margin: 0 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.wjs-share-container {
+    text-align: center;
+
+    .wjs-share {
+        cursor: pointer;
+        display: inline-block;
+        background: rgb(75, 0, 145);
+        color: #FFF;
+        padding: 12px;
+    }
+}

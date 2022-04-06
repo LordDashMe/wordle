@@ -1,0 +1,16 @@
+{
+    "plugins": {},
+    "third_party": {},
+    "commons": {
+        "global": "src/scss/global.scss",
+        "animation": "src/scss/animation.scss"
+    },
+    "components": {
+        "wordle": "src/scss/components/wordle.scss"
+    },
+    "pages": {
+        "wordle": [
+            "src/scss/pages/wordle.scss"
+        ]
+    }
+}
