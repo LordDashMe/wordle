@@ -205,11 +205,14 @@ var Wordle = {
 
             for (var x = 0; x < processLetters.length; x++) {
 
+                var correctSolutionPosition = correctSolution.indexOf(processLetters[x].letter);
+
                 if (
-                    correctSolution.indexOf(processLetters[x].letter) >= 0 && 
+                    correctSolutionPosition >= 0 && 
                     processLetters[x].flags.status === self.letterFlags.absent.status
                 ) {
                     processLetters[x]['flags'] = self.letterFlags.present;
+                    correctSolution[correctSolutionPosition] = '-';
                 }
             }
 
