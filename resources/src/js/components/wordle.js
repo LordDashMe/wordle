@@ -511,6 +511,10 @@ var Wordle = {
 
             var gueesContainerElement = self.collection.getGuessContainerElement(x);
 
+            if (typeof self.processLettersCollection[x] === 'undefined') {
+                break;
+            }
+
             for (var y = 0; y < self.processLettersCollection[x].length; y++) {
                 
                 gueesContainerElement.children[y].textContent = self.processLettersCollection[x][y].letter;
