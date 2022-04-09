@@ -1,3 +1,5 @@
+var WNUM = Math.floor(Math.random() * WORDS.length);
+
 document.addEventListener('DOMContentLoaded', function(e) {
 
     // Time Schedule - Every Midnight Reset for new Word
@@ -99,9 +101,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         var win = self.stats.winInGuesssNumber ? self.stats.winInGuesssNumber : 'X';
 
-        var wordNumber = Math.floor(Math.random() * WORDS.length);
-
-        var stats = `WordleJS #${wordNumber} ${win}/${self.maxNumberOfGuesses}\n\n`;
+        var stats = `WordleJS #${WNUM} ${win}/${self.maxNumberOfGuesses}\n\n`;
 
         stats += self.stats.progress.map(function (row) {
             return row.join('') + '\n';
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.wjsx = WORDS[Math.floor(Math.random() * WORDS.length)];
+    Wordle.wjsx = WORDS[WNUM];
     Wordle.events.onKeyUp();
     Wordle.events.onClickKeyPad();
     Wordle.events.onClickShareStats();
