@@ -1,3 +1,36 @@
+@import '../mixins';
+
 .wjs {
-    display: block;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    
+    .wjs-details {
+        margin: 0 0 22px 0;
+
+        @include screen-mobile {
+            margin-bottom: 18px;
+        }
+    }
+
+    .wjs-options-container {
+        margin: 0 0 24px 0;
+    }
+
+    .wjs-countdown {
+        font-family: 'Inter', sans-serif;
+        width: 200px;
+        margin: auto;
+        text-align: center;
+
+        .wjs-countdown-notice {
+            font-size: 1.2em;
+            line-height: 1.2;
+        }
+
+        #wjs_countdown {
+            font-size: 2.2em;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+    }
 }

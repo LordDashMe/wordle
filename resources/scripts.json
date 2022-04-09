@@ -1,9 +1,12 @@
 {
-    "plugins": {},
+    "plugins": {
+        "momentjs_2_29_2": "src/js/plugins/momentjs-2.29.2/momentjs.min.js"
+    },
     "third_party": {},
     "commons": {
         "global": "src/js/global.js",
-        "words": "src/js/words.js"
+        "words": "src/js/words.js",
+        "base_local_storage": "src/js/base_local_storage.js"
     },
     "components": {
         "wordle": "src/js/components/wordle.js"

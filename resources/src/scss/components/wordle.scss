@@ -1,68 +1,144 @@
-h1 {
-    text-align: center;
-}
+@import '../mixins';
 
-p {
-    text-align: center;
-}
-   
-.wjs-game-board {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
+.wjs {
 
-.wjs-game-board-letter-container {
-    display: flex;
-}
+    .wjs-details {
 
-.wjs-game-board-letter-item {
-    border: 2px solid gray;
-    border-radius: 3px;
-    margin: 2px;
-    font-size: 2.5rem;
-    font-weight: 700;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-}
+        h1 {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            margin: 0 0 8px 0;
+            font-size: 2.2em;
+            line-height: 1.2;
 
-.-filled {
-    border: 2px solid black;
-}
+            @include screen-mobile {
+                font-size: 2em;
+            }
+        }
+        
+        p {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            margin: 0 0 6px 0;
+            font-size: 1.2em;
+            line-height: 1.4;
 
-.wjs-keyboard {
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            @include screen-mobile {
+                font-size: 1em;
+            }
 
-.wjs-keyboard div {
-    display: flex;
-    margin: 4px 0;
-}
+            &:nth-child(3) {
+                font-size: 0.8em;
+                margin: 0;
+            }
 
-.wjs-keyboard-row__keypad {
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.5rem;
-    margin: 0 2px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
+            &:nth-child(4) {
+                font-size: 0.72em;
+                margin: 0;
+            }
+        }
+    }
 
-.wjs-share-container {
-    text-align: center;
+    .wjs-game-board {
+        margin: 0 0 24px 0;
+        min-height: 336px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
-    .wjs-share {
-        cursor: pointer;
-        display: inline-block;
-        background: rgb(75, 0, 145);
-        color: #FFF;
-        padding: 12px;
+        @include screen-mobile {
+            margin-bottom: 6px;
+        }
+
+        .wjs-game-board-letter-container {
+            display: flex;
+
+            .wjs-game-board-letter-item {
+                font-family: 'Inter', sans-serif;
+                border: 2px solid #DFDFDF;
+                margin: 2px;
+                font-size: 2rem;
+                font-weight: 700;
+                height: 52px;
+                width: 52px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+                background-color: #FFF;
+                border-radius: 4px;
+
+                &.-filled {
+                    border: 2px solid #A9A9A9;
+                }
+
+                &.-submitted {
+                    border: unset;
+                }
+            }
+        }
+    }
+
+    .wjs-keyboard {
+        margin: 0 0 24px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @include screen-mobile {
+            margin-bottom: 6px;
+        }
+    
+        div {
+            display: flex;
+            margin: 4px 0;
+            align-items: center;
+        }
+    
+        .wjs-keyboard-row__keypad {
+            font-family: 'Inter',sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px;
+            margin: 0 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            background-color: #f1f1f1;
+            height: 52px;
+            border-radius: 4px;
+
+            @include screen-mobile {
+                padding: 8px;
+                height: 42px;
+                margin: 2px;
+            }
+
+            @include screen-mobile-common {
+                padding: 6px;
+            }
+
+            @include screen-mobile-small-and-xtra-small {
+                padding: 4px;
+            }
+
+            svg {
+                display: inline-block;
+                pointer-events: none;
+            }
+        }
+    }
+
+    .wjs-options-container {
+        text-align: center;
+    
+        .wjs-share {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-block;
+            background: rgb(75, 0, 145);
+            color: #FFF;
+            padding: 12px;
+        }
     }
 }

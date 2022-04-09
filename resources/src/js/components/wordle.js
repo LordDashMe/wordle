@@ -1,177 +1,280 @@
-var wordNumber = Math.floor(Math.random() * WORDS.length);
-var solution = WORDS[wordNumber];
-
 var Wordle = {
+    afterRenderCallback: [],
+    guessTryNotEnoughLettersCallback: [],
+    guessTryNotInWordListCallback: [],
+    gameOverWinCallback: [],
+    gameOverLoseCallback: [],
+    shareStatsCallback: [],
 
     maxNumberOfGuesses: 6,
     maxNumberOfLetters: 5,
-
-    progressFlags: {
-        correct: '🟩',
-        present: '🟨',
-        absent: '⬛'
+    animation: {
+        checkGuessLettersDelayInSeconds: 0.2
+    },
+    letterFlags: {
+        correct: {
+            status: 'correct',
+            bgColor: '#5BC05B',
+            emoji: '🟩',
+            color: '#FFF'
+        },
+        present: {
+            status: 'present',
+            bgColor: '#FFFF8E',
+            emoji: '🟨',
+            color: '#434343'
+        },
+        absent: {
+            status: 'absent',
+            bgColor: '#BEBEBE',
+            emoji: '⬛',
+            color: '#434343'
+        }
     },
 
-    colorFlags: {
-        correct: 'green',
-        present: 'yellow',
-        absent: 'grey'
-    },
-
+    wjsx: '',
     remainingGuessesCounter: 0,
     letterCounter: 0,
     currentGuessLettersCollection: [],
-
+    processLettersCollection: [],
     stats: {
         winInGuesssNumber: 0,
         progress: []
     },
+    completedOn: null,
 
     elements: {
         wjsGameBoardId: 'wjs_game_board',
         wjsKeyboardId: 'wjs_keyboard',
         wjsShareId: 'wjs_share',
-
         wjsKeyboardRowKeypadClass: 'wjs-keyboard-row__keypad',
-
         wjsGameBoardLetterContainer: 'wjs-game-board-letter-container',
         wjsGameBoardLetterItem: 'wjs-game-board-letter-item',
-       
         wjsGameBoardLetterItemModifierFilled: '-filled',
+        wjsGameBoardLetterItemModifierSubmitted: '-submitted'
     },
 
-    process: {
+    collection: {
 
-        checkGuessLetters: function () {
+        getCurrentGuessContainerElement: function () {
 
             var self = Wordle;
 
-            var letterContainer = (
+            return (
                 document.getElementsByClassName(self.elements.wjsGameBoardLetterContainer)[
                     self.maxNumberOfGuesses - self.remainingGuessesCounter
                 ]
             );
 
+        },
+
+        getGuessContainerElement: function (index) {
+
+            var self = Wordle;
+
+            return (
+                document.getElementsByClassName(self.elements.wjsGameBoardLetterContainer)[index]
+            );
+
+        },
+
+        getKeypadsElement: function () {
+
+            var self = Wordle;
+
+            return document.getElementsByClassName(self.elements.wjsKeyboardRowKeypadClass);
+
+        }
+
+    },
+
+    process: {
+
+        executeCallback: function (callbackName, parameters) {
+
+            var self = Wordle;
+    
+            if (typeof self[callbackName] === 'undefined') {
+                return;
+            }
+
+            if (! Array.isArray(self[callbackName])) {
+                return;
+            }
+
+            if (typeof parameters === 'undefined') {
+                parameters = null;
+            }
+
+            for (var x in self[callbackName]) {
+    
+                if (typeof self[callbackName][x] === 'function') {
+                    self[callbackName][x](parameters);
+                }
+            }
+    
+        },
+
+        checkGuessLetters: function () {
+
+            var self = Wordle;
+
             var guessString = self.currentGuessLettersCollection.join('');
 
-            var correctSolution = Array.from(solution);
-
-            if (guessString.length != self.maxNumberOfLetters) {
-                alert('Not enough letters!');
+            if (guessString.length !== self.maxNumberOfLetters) {
+                self.process.executeCallback('guessTryNotEnoughLettersCallback', (self.maxNumberOfLetters - guessString.length));
                 return;
             }
 
             if (! WORDS.includes(guessString)) {
-                alert('Word not in list!');
+                self.process.executeCallback('guessTryNotInWordListCallback');
                 return;
             }
 
+            var correctWord = self.wjsx;
+            var processLetters = [];
+            var correctSolution = Array.from(correctWord);
+
+            self.process.filterCorrectLetters(processLetters, correctSolution);
+            self.process.filterPresentLetters(processLetters, correctSolution);
+
+            var currentGuessContainerElement = self.collection.getCurrentGuessContainerElement();
+
             var statsProgress = [];
+
+            for (var x = 0; x < processLetters.length; x++) {
+
+                self.process.shadeGuessLetters(x, 
+                    currentGuessContainerElement.children[x], 
+                    processLetters[x]
+                );
+
+                statsProgress.push(processLetters[x].flags.emoji);
+            }
+
+            self.processLettersCollection.push(processLetters);
+            self.stats.progress.push(statsProgress);
+
+            if (guessString === correctWord) {
+                self.stats.winInGuesssNumber = (self.maxNumberOfGuesses - self.remainingGuessesCounter) + 1;
+                self.remainingGuessesCounter = 0;
+                self.completedOn = Date.now();
+                self.saveData();
+                self.process.executeCallback('gameOverWinCallback');
+                return;
+            }
+
+            self.remainingGuessesCounter--;
+            self.currentGuessLettersCollection = [];
+            self.letterCounter = 0;
+
+            if (self.remainingGuessesCounter <= 0) {
+                self.completedOn = Date.now();
+                self.process.executeCallback('gameOverLoseCallback', correctWord);
+            }
+
+            self.saveData();
+
+        },
+
+        filterCorrectLetters: function (processLetters, correctSolution) {
+
+            var self = Wordle;
 
             for (var x = 0; x < self.maxNumberOfLetters; x++) {
 
-                var color = '';
-                var letterItem = letterContainer.children[x];
                 var letter = self.currentGuessLettersCollection[x];
+                var flags = self.letterFlags.absent;
 
-                var letterPosition = correctSolution.indexOf(letter);
-
-                if (letterPosition === -1) {
-                    color = self.colorFlags.absent;
-                    statsProgress.push(self.progressFlags.absent);
-                } else {
-
-                    if (letter === correctSolution[x]) {
-                        color = self.colorFlags.correct;
-                        statsProgress.push(self.progressFlags.correct);
-                    } else {
-                        color = self.colorFlags.present;
-                        statsProgress.push(self.progressFlags.present);
-                    }
-
-                    correctSolution[letterPosition] = '-';
+                if (letter === correctSolution[x]) {
+                    flags = self.letterFlags.correct;
+                    correctSolution[correctSolution.indexOf(letter)] = '-';
                 }
 
-                (function (x, letterItem, letter, color) {
-
-                    setTimeout(function () {
-        
-                        letterItem.classList.add('pulse');
-
-                        letterItem.addEventListener('animationend', function (e) {
-
-                            e.stopPropagation();
-
-                            letterItem.classList.remove('pulse');
-
-                        }, {once: true});
-
-                        letterItem.style.backgroundColor = color;
-
-                        self.process.shadeKeyboard(letter, color);
-
-                    }, 250 * x);
-
-                })(x, letterItem, letter, color);
-
+                processLetters.push({
+                    letter: letter,
+                    flags: flags
+                });
             }
 
-            self.stats.progress.push(statsProgress);
+        },
 
-            if (guessString === solution) {
+        filterPresentLetters: function (processLetters, correctSolution) {
 
-                alert('Phew! you got the word!');
+            var self = Wordle;
 
-                self.stats.winInGuesssNumber = (self.maxNumberOfGuesses - self.remainingGuessesCounter) + 1;
-                
-                self.remainingGuessesCounter = 0;
+            for (var x = 0; x < processLetters.length; x++) {
 
-                // HOOK DONE
-                document.getElementById(self.elements.wjsShareId).classList.remove('-hide-element');
-
-            } else {
-
-                self.remainingGuessesCounter--;
-                self.currentGuessLettersCollection = [];
-                self.letterCounter = 0;
-
-                // HOOK NEXT GUESS
-
-                if (self.remainingGuessesCounter <= 0) {
-                    
-                    alert(`Run out of guesses! Game over. The correct word is: "${solution}"`);
-
-                    // HOOK DONE
-                    document.getElementById(self.elements.wjsShareId).classList.remove('-hide-element');
+                if (
+                    correctSolution.indexOf(processLetters[x].letter) >= 0 && 
+                    processLetters[x].flags.status === self.letterFlags.absent.status
+                ) {
+                    processLetters[x]['flags'] = self.letterFlags.present;
                 }
             }
 
         },
 
-        shadeKeyboard: function (letter, color) {
+        shadeGuessLetters: function (counter, element, processLetters) {
 
             var self = Wordle;
 
-            var keypadElements = document.getElementsByClassName(self.elements.wjsKeyboardRowKeypadClass);
+            (function (counter, element, letter, bgColor, color) {
 
-            for (var x in keypadElements) {
+                setTimeout(function () {
+    
+                    element.classList.add('pulse');
 
+                    element.addEventListener('animationend', function (e) {
+
+                        e.stopPropagation();
+
+                        element.classList.remove('pulse');
+
+                    }, { once: true });
+
+                    element.classList.add(self.elements.wjsGameBoardLetterItemModifierSubmitted);
+                    element.setAttribute('data-bg-color', bgColor);
+                    element.style.backgroundColor = bgColor;
+                    element.setAttribute('data-color', color);
+                    element.style.color = color;
+
+                    self.process.shadeKeyboard(letter, bgColor, color);
+
+                }, (self.animation.checkGuessLettersDelayInSeconds * 1000) * counter);
+
+            })(
+                counter, 
+                element, 
+                processLetters.letter, 
+                processLetters.flags.bgColor, 
+                processLetters.flags.color
+            );
+
+        },
+
+        shadeKeyboard: function (letter, bgColor, color) {
+
+            var self = Wordle;
+
+            var keypadsElement = self.collection.getKeypadsElement();
+
+            for (var x in keypadsElement) {
         
-                if (keypadElements[x].textContent === letter) {
-                    
-                    var currentBgColor = keypadElements[x].style.backgroundColor;
-                    
-                    if (currentBgColor === self.colorFlags.correct) {
-                        return;
-                    } 
-        
-                    if (currentBgColor === self.colorFlags.present && color !== self.colorFlags.correct) {
-                        return;
-                    }
-
-                    keypadElements[x].style.backgroundColor = color;
-                    break;
+                if (keypadsElement[x].getAttribute('data-key') !== letter) {
+                    continue;
                 }
+
+                var currentBgColor = keypadsElement[x].getAttribute('data-bg-color');
+
+                if (currentBgColor !== self.letterFlags.correct.bgColor) {
+                    keypadsElement[x].setAttribute('data-bg-color', bgColor);
+                    keypadsElement[x].style.backgroundColor = bgColor;
+                    keypadsElement[x].setAttribute('data-color', color);
+                    keypadsElement[x].style.color = color;
+                }
+
+                break;
             }
 
         }
@@ -189,14 +292,10 @@ var Wordle = {
             }
         
             pressedKey = pressedKey.toLowerCase();
-        
-            var letterContainer = (
-                document.getElementsByClassName(self.elements.wjsGameBoardLetterContainer)[
-                    self.maxNumberOfGuesses - self.remainingGuessesCounter
-                ]
-            );
 
-            let letterItem = letterContainer.children[self.letterCounter];
+            var currentGuessContainerElement = self.collection.getCurrentGuessContainerElement();
+
+            let letterItem = currentGuessContainerElement.children[self.letterCounter];
         
             letterItem.classList.add('pulse');
         
@@ -222,13 +321,9 @@ var Wordle = {
 
             var self = Wordle;
 
-            var letterContainer = (
-                document.getElementsByClassName(self.elements.wjsGameBoardLetterContainer)[
-                    self.maxNumberOfGuesses - self.remainingGuessesCounter
-                ]
-            );
+            var currentGuessContainerElement = self.collection.getCurrentGuessContainerElement();
             
-            let letterItem = letterContainer.children[self.letterCounter - 1];
+            let letterItem = currentGuessContainerElement.children[self.letterCounter - 1];
             
             letterItem.textContent = '';
             
@@ -251,24 +346,30 @@ var Wordle = {
             document.addEventListener('keyup', function (e) {
 
                 if (self.remainingGuessesCounter === 0) {
-                    return
+                    return;
                 }
             
                 var pressedKey = String(e.key);
 
-                if (pressedKey === 'Backspace' && self.letterCounter !== 0) {
+                if (pressedKey === 'Backspace' && self.letterCounter <= 0) {
+                    return;
+                }
 
+                if (pressedKey === 'Backspace' && self.letterCounter > 0) {
                     self.actions.deleteLetter();
                     return;
                 }
             
                 if (pressedKey === 'Enter') {
-
                     self.process.checkGuessLetters();
                     return;
                 }
+
+                if (pressedKey.length > 1) {
+                    return;
+                }
             
-                var found = pressedKey.match(/[a-z]/gi);
+                var found = pressedKey.match(/^(([a-z])(?![0-9]))|^(([A-Z])(?![0-9]))/gi);
                 
                 if (!found || found.length > 1) {
                     return;
@@ -292,11 +393,21 @@ var Wordle = {
                     return;
                 }
 
-                var key = target.textContent;
+                if (self.remainingGuessesCounter === 0) {
+                    return;
+                }
+
+                target.classList.add('pulse');
+        
+                target.addEventListener('animationend', function (e) {
             
-                if (key === 'Del') {
-                    key = 'Backspace';
-                } 
+                    e.stopPropagation();
+            
+                    target.classList.remove('pulse');
+            
+                }, {once: true});
+
+                var key = target.getAttribute('data-key');
             
                 document.dispatchEvent(new KeyboardEvent('keyup', {'key': key}));
 
@@ -304,21 +415,13 @@ var Wordle = {
 
         },
 
-        onClickShare: function () {
+        onClickShareStats: function () {
          
             var self = Wordle;
 
             document.getElementById(self.elements.wjsShareId).addEventListener('click', function (e) {
 
-                var win = self.stats.winInGuesssNumber ? self.stats.winInGuesssNumber : 'X';
-
-                var stats = `WordleJS #${wordNumber} ${win}/${self.maxNumberOfGuesses}\n\n`;
-
-                stats += self.stats.progress.map(function (row) {
-                    return row.join('') + '\n';
-                }).join('');
-
-                navigator.clipboard.writeText(stats);
+                self.process.executeCallback('shareStatsCallback');
 
             });
             
@@ -326,11 +429,54 @@ var Wordle = {
 
     },
 
-    render: function () {
+    saveData: function () {
+
+        if (! BaseLocalStorage.isSupported()) {
+            return;
+        }
 
         var self = this;
 
-        self.remainingGuessesCounter = self.maxNumberOfGuesses;
+        BaseLocalStorage.set('wjs', JSON.stringify({
+            wjsx: btoa(self.wjsx),
+            stats: self.stats,
+            remainingGuessesCounter: self.remainingGuessesCounter,
+            letterCounter: self.letterCounter,
+            currentGuessLettersCollection: self.currentGuessLettersCollection,
+            processLettersCollection: self.processLettersCollection,
+            completedOn: self.completedOn
+        }));
+
+    },
+
+    loadData: function () {
+
+        if (! BaseLocalStorage.isSupported()) {
+            return;
+        }
+
+        var self = this;
+
+        var data = BaseLocalStorage.get('wjs');
+
+        if (data) {
+
+            data = JSON.parse(data);
+
+            self.wjsx = atob(data.wjsx);
+            self.stats = data.stats;
+            self.remainingGuessesCounter = data.remainingGuessesCounter;
+            self.letterCounter = data.letterCounter;
+            self.currentGuessLettersCollection = data.currentGuessLettersCollection;
+            self.processLettersCollection = data.processLettersCollection;
+            self.completedOn = data.completedOn;
+        }
+
+    },
+
+    prepareBoardTemplate: function () {
+
+        var self = this;
 
         var gameBoard = document.getElementById(self.elements.wjsGameBoardId);
 
@@ -352,6 +498,42 @@ var Wordle = {
             gameBoard.appendChild(letterContainer);
         }
 
-    }
+    },
 
+    prepareLoadedData: function () {
+
+        var self = this;
+
+        for (var x = 0; x < (self.maxNumberOfGuesses - self.remainingGuessesCounter); x++) {
+
+            var gueesContainerElement = self.collection.getGuessContainerElement(x);
+
+            for (var y = 0; y < self.processLettersCollection[x].length; y++) {
+                
+                gueesContainerElement.children[y].textContent = self.processLettersCollection[x][y].letter;
+
+                self.process.shadeGuessLetters(y, 
+                    gueesContainerElement.children[y], 
+                    self.processLettersCollection[x][y]
+                );
+            }
+        }
+
+    },
+
+    render: function () {
+
+        var self = this;
+
+        self.remainingGuessesCounter = self.maxNumberOfGuesses;
+
+        self.loadData();
+
+        self.prepareBoardTemplate();
+
+        self.prepareLoadedData();
+
+        self.process.executeCallback('afterRenderCallback');
+
+    }
 };
