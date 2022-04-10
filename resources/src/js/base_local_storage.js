@@ -2,10 +2,7 @@ var BaseLocalStorage = {
 
     isSupported: function () {
 
-        if (
-            typeof (Storage) !== 'undefined' ||
-            typeof window.localStorage !== 'undefined'
-        ) {
+        if (typeof (Storage) !== 'undefined' || typeof window.localStorage !== 'undefined') {
             return true;
         }
 

@@ -2,7 +2,9 @@
     "plugins": {
         "momentjs_2_29_2": "src/js/plugins/momentjs-2.29.2/momentjs.min.js"
     },
-    "third_party": {},
+    "third_party": {
+        "gtag_ga": "src/js/third_party/gtag_ga.js"
+    },
     "commons": {
         "global": "src/js/global.js",
         "words": "src/js/words.js",

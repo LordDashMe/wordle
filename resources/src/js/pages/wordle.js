@@ -1,10 +1,28 @@
-var WNUM = Math.floor(Math.random() * WORDS.length);
-
 document.addEventListener('DOMContentLoaded', function(e) {
 
-    // Time Schedule - Every Midnight Reset for new Word
+    window.WNUM = ((Math.round(moment().dayOfYear() + moment().year()) / window._WS.length) * window._WS.length) + 1;
+
+    if (window.WNUM > window._WS.length) {
+        window.WNUM = Math.floor(window.WNUM / window._WS.length) * 1;
+    }
+
+    Wordle.wjsn = window.WNUM;
+
+    Wordle.lookUpCollection = window._WS;
+
     if (BaseLocalStorage.isSupported()) {
 
+        // Do some clean up for old version of data.
+        if (! BaseLocalStorage.get('wjs_version') || BaseLocalStorage.get('wjs_version') !== GLOBAL_WJS_VERSION) {
+            
+            BaseLocalStorage.set('wjs_version', GLOBAL_WJS_VERSION);
+            
+            if (BaseLocalStorage.get('wjs')) {
+                BaseLocalStorage.remove('wjs');
+            }
+        }
+
+        // Time Schedule - Every Midnight Reset for new Word
         if (! BaseLocalStorage.get('wjs_next_word_schedule')) {
             BaseLocalStorage.set('wjs_next_word_schedule', GLOBAL_NEXT_WORD_SCHEDULE);
         } else if (BaseLocalStorage.get('wjs_next_word_schedule') < GLOBAL_NEXT_WORD_SCHEDULE) {
@@ -24,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         document.getElementById('wjs_countdown_container').classList.remove('-hide-element');
 
-        document.getElementById('wjs_countdown').textContent = GLOBAL_TIME_REMAINING_NEXT_WORD_SCHEDULE;
+        document.getElementById('wjs_countdown').textContent = moment.utc(moment.duration(GLOBAL_NEXT_WORD_SCHEDULE - GLOBAL_CURRENT_DATE).asMilliseconds()).format('HH:mm:ss');
 
         var countdown = setInterval(function () {
 
@@ -51,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         if (self.completedOn) {
             
-            document.getElementById(self.elements.wjsShareId).classList.remove('-hide-element');
+            document.getElementById('wjs_options_container').classList.remove('-hide-element');
 
             showCountDown();
 
@@ -71,13 +89,15 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.gameOverWinCallback.push(function () {
+    Wordle.gameOverWinCallback.push(function (correctWord) {
 
         var self = Wordle;
 
+        self.wotd = correctWord;
+
         alert('Phew! you got the word!');
 
-        document.getElementById(self.elements.wjsShareId).classList.remove('-hide-element');
+        document.getElementById('wjs_options_container').classList.remove('-hide-element');
 
         showCountDown();
 
@@ -87,9 +107,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         var self = Wordle;
 
-        alert(`Run out of guesses! Game over. The correct word is: "${correctWord}"`);
+        self.wotd = correctWord;
 
-        document.getElementById(self.elements.wjsShareId).classList.remove('-hide-element');
+        alert('Sorry, you\'ve run out of guesses! Game over. The correct word is: "' + correctWord.toUpperCase() + '".');
+
+        document.getElementById('wjs_options_container').classList.remove('-hide-element');
 
         showCountDown();
 
@@ -101,20 +123,41 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         var win = self.stats.winInGuesssNumber ? self.stats.winInGuesssNumber : 'X';
 
-        var stats = `WordleJS #${WNUM} ${win}/${self.maxNumberOfGuesses}\n\n`;
+        var stats = `WordleJS #${self.wjsn} ${win}/${self.maxNumberOfGuesses}\n\n`;
 
-        stats += self.stats.progress.map(function (row) {
-            return row.join('') + '\n';
-        }).join('');
+        stats += self.stats.progress.map(function (row) { return row.join('') + '\n'; }).join('');
 
-        navigator.clipboard.writeText(stats);
+        var clipboard = new ClipboardJS('#wjs_share', {
+            text: function () { return stats; }
+        });
+
+        clipboard.on('success', function(e) {
+            alert('Copied');
+            e.clearSelection();
+            clipboard.destroy();
+        });
+
+        clipboard.on('error', function(e) {
+            alert('Share failed');
+            clipboard.destroy();
+        });
 
     });
 
-    Wordle.wjsx = WORDS[WNUM];
+    Wordle.setWjsx(window._WS[window.WNUM]);
+
     Wordle.events.onKeyUp();
+
     Wordle.events.onClickKeyPad();
+
     Wordle.events.onClickShareStats();
+    
     Wordle.render();
+
+    document.getElementById('wjs_search_meaning').addEventListener('click', function (e) {
+
+        window.open('https://www.google.com.ph/search?q=' + Wordle.wotd + '+meaning', '_blank');
+
+    });
 
 });

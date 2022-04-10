@@ -10,17 +10,84 @@
         @include screen-mobile {
             margin-bottom: 18px;
         }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            margin: 0 0 8px 0;
+            font-size: 2.2em;
+            line-height: 1.2;
+
+            @include screen-mobile {
+                font-size: 2em;
+            }
+
+            @include screen-mobile-small-and-xtra-small {
+                font-size: 1.8em;
+            }
+        }
+        
+        p {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            margin: 0 0 6px 0;
+            font-size: 1.2em;
+            line-height: 1.4;
+
+            @include screen-mobile {
+                font-size: 1em;
+            }
+
+            @include screen-mobile-small-and-xtra-small {
+                font-size: 0.8em;
+            }
+
+            &:nth-child(3) {
+                font-size: 0.8em;
+                margin: 0;
+
+                @include screen-mobile {
+                    font-size: 0.6em;
+                }
+            }
+
+            &:nth-child(4) {
+                font-size: 0.72em;
+                margin: 0;
+
+                @include screen-mobile {
+                    font-size: 0.6em;
+                }
+            }
+        }
     }
 
-    .wjs-options-container {
-        margin: 0 0 24px 0;
+    .wjs-game-board {
+
+        .wjs-game-board-letter-container {
+
+            .wjs-game-board-letter-item {
+                font-family: 'Inter', sans-serif;
+            }
+        }
+    }
+
+    .wjs-keyboard {
+
+        .wjs-keyboard-row__keypad {
+            font-family: 'Inter', sans-serif;   
+        }
     }
 
     .wjs-countdown {
+        margin: 0 auto 18px auto;
         font-family: 'Inter', sans-serif;
         width: 200px;
-        margin: auto;
         text-align: center;
+
+        @include screen-mobile {
+            margin-bottom: 8px;
+        }
 
         .wjs-countdown-notice {
             font-size: 1.2em;
@@ -31,6 +98,30 @@
             font-size: 2.2em;
             font-weight: 700;
             line-height: 1.2;
+        }
+    }
+
+    .wjs-options-container {
+        text-align: center;
+        margin: 0 0 18px 0;
+
+        .wjs-options-button  {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-block;
+            color: #FFF;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 0.88em;
+
+            &.wjs-share {
+                background: #4b0091;
+            }
+    
+            &.wjs-search-meaning {
+                background: #006e91;
+            }
         }
     }
 }

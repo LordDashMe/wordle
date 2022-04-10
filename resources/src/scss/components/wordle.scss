@@ -2,43 +2,6 @@
 
 .wjs {
 
-    .wjs-details {
-
-        h1 {
-            font-family: 'Inter', sans-serif;
-            text-align: center;
-            margin: 0 0 8px 0;
-            font-size: 2.2em;
-            line-height: 1.2;
-
-            @include screen-mobile {
-                font-size: 2em;
-            }
-        }
-        
-        p {
-            font-family: 'Inter', sans-serif;
-            text-align: center;
-            margin: 0 0 6px 0;
-            font-size: 1.2em;
-            line-height: 1.4;
-
-            @include screen-mobile {
-                font-size: 1em;
-            }
-
-            &:nth-child(3) {
-                font-size: 0.8em;
-                margin: 0;
-            }
-
-            &:nth-child(4) {
-                font-size: 0.72em;
-                margin: 0;
-            }
-        }
-    }
-
     .wjs-game-board {
         margin: 0 0 24px 0;
         min-height: 336px;
@@ -54,7 +17,6 @@
             display: flex;
 
             .wjs-game-board-letter-item {
-                font-family: 'Inter', sans-serif;
                 border: 2px solid #DFDFDF;
                 margin: 2px;
                 font-size: 2rem;
@@ -96,7 +58,6 @@
         }
     
         .wjs-keyboard-row__keypad {
-            font-family: 'Inter',sans-serif;
             font-size: 1rem;
             font-weight: 700;
             padding: 14px;
@@ -125,20 +86,6 @@
                 display: inline-block;
                 pointer-events: none;
             }
-        }
-    }
-
-    .wjs-options-container {
-        text-align: center;
-    
-        .wjs-share {
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-block;
-            background: rgb(75, 0, 145);
-            color: #FFF;
-            padding: 12px;
         }
     }
 }

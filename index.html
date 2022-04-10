@@ -8,27 +8,45 @@
     <!-- PAGE MAIN DETAILS -->
     <title>WordleJS</title>
     <meta name="description" content="A simplified and pure JS implementation of Wordle." />
-    <link rel="canonical" href="/" />
+    <link rel="canonical" href="https://lorddashme.github.io/wordlejs/" />
     <!-- OPEN-GRAPH META DETAILS -->
     <meta name="og:type" content="website" />
     <meta name="og:url" content="https://lorddashme.github.io/wordlejs/" />
     <meta name="og:title" content="WordleJS" />
-    <meta name="og:image" content="" />
+    <meta name="og:image" content="https://lorddashme.github.io/wordlejs/resources/img/wordlejs.png" />
     <meta name="og:description" content="A simplified and pure JS implementation of Wordle." />
     <!-- TWITTER META DETAILS -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="WordleJS" />
     <meta name="twitter:description" content="A simplified and pure JS implementation of Wordle." />
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:image" content="https://lorddashme.github.io/wordlejs/resources/img/wordlejs.png" />
+    <!-- FAVICONS -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="https://lorddashme.github.io/wordlejs/resources/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://lorddashme.github.io/wordlejs/resources/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://lorddashme.github.io/wordlejs/resources/json/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://lorddashme.github.io/wordlejs/resources/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <!-- EXTERNAL ASSESTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&display=swap" rel="stylesheet">
     <!-- ASSETS -->
-    <link rel="stylesheet" href="resources/dist/css/commons/global.min.css?v=0.0.6" />
-    <link rel="stylesheet" href="resources/dist/css/commons/animation.min.css?v=0.0.6" />
-    <link rel="stylesheet" href="resources/dist/css/components/wordle.min.css?v=0.0.6" />
-    <link rel="stylesheet" href="resources/dist/css/pages/wordle.min.css?v=0.0.6" />
+    <link rel="stylesheet" href="resources/dist/css/commons/global.min.css?v=0.0.7" />
+    <link rel="stylesheet" href="resources/dist/css/commons/animation.min.css?v=0.0.7" />
+    <link rel="stylesheet" href="resources/dist/css/components/wordle.min.css?v=0.0.7" />
+    <link rel="stylesheet" href="resources/dist/css/pages/wordle.min.css?v=0.0.7" />
 </head>
 <body>
     <div class="wjs content-wrapper content-padding">
@@ -79,24 +97,28 @@
                 </div>
             </div>
         </div>
-        <div class="wjs-options-container">
-            <div id="wjs_share" class="wjs-share -hide-element">SHARE</div>
-        </div>
         <div id="wjs_countdown_container" class="wjs-countdown -hide-element">
             <div class="wjs-countdown-notice">NEXT WORD</div>
             <div id="wjs_countdown"></div>
         </div>
+        <div id="wjs_options_container" class="wjs-options-container -hide-element">
+            <div id="wjs_share" class="wjs-options-button wjs-share">SHARE</div>
+            <div id="wjs_search_meaning" class="wjs-options-button wjs-search-meaning">SEARCH MEANING</div>
+        </div>
     </div>
-    <script src="resources/dist/js/plugins/momentjs_2_29_2.min.js"></script>
     <script>
-        var GLOBAL_CURRENT_DATE = Date.now();
-        var GLOBAL_NEXT_WORD_SCHEDULE = new Date(new Date().setHours(24,0,0,0)).getTime();
-        var GLOBAL_TIME_REMAINING_NEXT_WORD_SCHEDULE = moment.utc(moment.duration(GLOBAL_NEXT_WORD_SCHEDULE - GLOBAL_CURRENT_DATE).asMilliseconds()).format('HH:mm:ss');
+    var GLOBAL_WJS_VERSION = '0.0.7';
+    var GLOBAL_CURRENT_DATE = Date.now();
+    var GLOBAL_NEXT_WORD_SCHEDULE = new Date(new Date().setHours(24, 0, 0, 0)).getTime();
     </script>
-    <script src="resources/dist/js/commons/global.min.js?v=0.0.6"></script>
-    <script src="resources/dist/js/commons/words.min.js?v=0.0.6"></script>
-    <script src="resources/dist/js/commons/base_local_storage.min.js?v=0.0.6"></script>
-    <script src="resources/dist/js/components/wordle.min.js?v=0.0.6"></script>
-    <script src="resources/dist/js/pages/wordle.min.js?v=0.0.6"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-128894279-1" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js" defer></script>
+    <script src="resources/dist/js/third_party/gtag_ga.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/plugins/momentjs_2_29_2.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/commons/global.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/commons/words.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/commons/base_local_storage.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/components/wordle.min.js?v=0.0.7" defer></script>
+    <script src="resources/dist/js/pages/wordle.min.js?v=0.0.7" defer></script>
 </body>
 </html>

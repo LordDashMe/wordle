@@ -1,4 +1,4 @@
-var WORDS = [
+window._WS = [
     'which',
     'there',
     'their',
@@ -2123,7 +2123,6 @@ var WORDS = [
     'patio',
     'rabbi',
     'petal',
-    'polyp',
     'tints',
     'grate',
     'troll',
