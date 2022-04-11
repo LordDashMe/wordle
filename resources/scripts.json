@@ -1,6 +1,7 @@
 {
     "plugins": {
-        "momentjs_2_29_2": "src/js/plugins/momentjs-2.29.2/momentjs.min.js"
+        "momentjs_2_29_2": "src/js/plugins/momentjs-2.29.2/momentjs.min.js",
+        "clipboard_2_0_10": "src/js/plugins/clipboard-2.0.10/clipboard.min.js"
     },
     "third_party": {
         "gtag_ga": "src/js/third_party/gtag_ga.js"

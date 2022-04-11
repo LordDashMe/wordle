@@ -15,15 +15,15 @@
             font-family: 'Inter', sans-serif;
             text-align: center;
             margin: 0 0 8px 0;
-            font-size: 2.2em;
+            font-size: 2em;
             line-height: 1.2;
 
             @include screen-mobile {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             @include screen-mobile-small-and-xtra-small {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
         }
         
@@ -31,11 +31,11 @@
             font-family: 'Inter', sans-serif;
             text-align: center;
             margin: 0 0 6px 0;
-            font-size: 1.2em;
+            font-size: 1em;
             line-height: 1.4;
 
             @include screen-mobile {
-                font-size: 1em;
+                font-size: 0.9em;
             }
 
             @include screen-mobile-small-and-xtra-small {

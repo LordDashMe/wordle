@@ -67,11 +67,14 @@
             background-color: #f1f1f1;
             height: 52px;
             border-radius: 4px;
+            min-width: 38px;
+            justify-content: center;
 
             @include screen-mobile {
                 padding: 8px;
                 height: 42px;
                 margin: 2px;
+                min-width: 24px;
             }
 
             @include screen-mobile-common {

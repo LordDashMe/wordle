@@ -465,7 +465,7 @@ var Wordle = {
 
         BaseLocalStorage.set('wjs', JSON.stringify({
             wjsn: self.wjsn,        
-            wjsx: btoa(atob(self.wjsx)),
+            wjsx: ('0wjx' + btoa(self.wjsx)).replace('==', ''),
             stats: self.stats,
             remainingGuessesCounter: self.remainingGuessesCounter,
             letterCounter: self.letterCounter,
@@ -492,7 +492,7 @@ var Wordle = {
             data = JSON.parse(data);
             
             self.wjsn = data.wjsn;
-            self.wjsx = atob(data.wjsx);
+            self.wjsx = atob((data.wjsx).substring(4));
             self.stats = data.stats;
             self.remainingGuessesCounter = data.remainingGuessesCounter;
             self.letterCounter = data.letterCounter;

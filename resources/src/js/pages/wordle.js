@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     Wordle.guessTryNotEnoughLettersCallback.push(function (remainingLetters) {
 
-        alert('Please provide the required number of letters before submitting the guess. You have remaining ' + remainingLetters + ' letter(s).');
+        alert('Provide the required number of letter(s) before submitting the guess. You have remaining ' + remainingLetters + ' letter(s).');
 
     });
 
     Wordle.guessTryNotInWordListCallback.push(function () {
 
-        alert('The word that you provided is not valid, please try again.');
+        alert('The word that you provided is invalid.');
 
     });
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         self.wotd = correctWord;
 
-        alert('Sorry, you\'ve run out of guesses! Game over. The correct word is: "' + correctWord.toUpperCase() + '".');
+        alert('Game over! sorry, you\'ve run out of guesses. The correct word is: "' + correctWord.toUpperCase() + '".');
 
         document.getElementById('wjs_options_container').classList.remove('-hide-element');
 
