@@ -1,5 +1,6 @@
 var Wordle = {
     afterRenderCallback: [],
+    guessSubmitCallback: [],
     guessTryNotEnoughLettersCallback: [],
     guessTryNotInWordListCallback: [],
     gameOverWinCallback: [],
@@ -387,6 +388,7 @@ var Wordle = {
                 }
             
                 if (pressedKey === 'Enter') {
+                    self.process.executeCallback('guessSubmitCallback');
                     self.process.checkGuessLetters();
                     return;
                 }
