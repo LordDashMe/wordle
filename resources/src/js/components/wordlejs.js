@@ -1,4 +1,4 @@
-var Wordle = {
+var WordleJS = {
     afterRenderCallback: [],
     guessSubmitCallback: [],
     guessTryNotEnoughLettersCallback: [],
@@ -72,7 +72,7 @@ var Wordle = {
 
         getCurrentGuessContainerElement: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             return (
                 document.getElementsByClassName(self.elements.wjsGameBoardLetterContainerClass)[
@@ -84,7 +84,7 @@ var Wordle = {
 
         getGuessContainerElement: function (index) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             return (
                 document.getElementsByClassName(self.elements.wjsGameBoardLetterContainerClass)[index]
@@ -94,7 +94,7 @@ var Wordle = {
 
         getKeypadsElement: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             return document.getElementsByClassName(self.elements.wjsKeyboardRowKeypadClass);
 
@@ -106,7 +106,7 @@ var Wordle = {
 
         executeCallback: function (callbackName, parameters) {
 
-            var self = Wordle;
+            var self = WordleJS;
     
             if (typeof self[callbackName] === 'undefined') {
                 return;
@@ -131,7 +131,7 @@ var Wordle = {
 
         checkGuessLetters: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             var guessString = self.currentGuessLettersCollection.join('');
 
@@ -142,7 +142,7 @@ var Wordle = {
                 return;
             }
 
-            if (! self.lookUpCollection.includes(guessString)) {
+            if (self.lookUpCollection.length > 0 && ! self.lookUpCollection.includes(guessString)) {
                 self.process.executeCallback('guessTryNotInWordListCallback');
                 return;
             }
@@ -200,7 +200,7 @@ var Wordle = {
 
         filterCorrectLetters: function (processLetters, correctSolution) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             for (var x = 0; x < self.maxNumberOfLetters; x++) {
 
@@ -222,7 +222,7 @@ var Wordle = {
 
         filterPresentLetters: function (processLetters, correctSolution) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             for (var x = 0; x < processLetters.length; x++) {
 
@@ -241,19 +241,19 @@ var Wordle = {
 
         shadeGuessLetters: function (counter, element, processLetters) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             (function (counter, element, letter, bgColor, color) {
 
                 setTimeout(function () {
     
-                    element.classList.add('pulse');
+                    element.classList.add('animation-pulse');
 
                     element.addEventListener('animationend', function (e) {
 
                         e.stopPropagation();
 
-                        element.classList.remove('pulse');
+                        element.classList.remove('animation-pulse');
 
                     }, { once: true });
 
@@ -282,7 +282,7 @@ var Wordle = {
 
         shadeKeyboard: function (letter, bgColor, color) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             var keypadsElement = self.collection.getKeypadsElement();
 
@@ -312,7 +312,7 @@ var Wordle = {
 
         addLetter: function (pressedKey) {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             if (self.letterCounter >= self.maxNumberOfLetters) {
                 return;
@@ -324,13 +324,13 @@ var Wordle = {
 
             let letterItem = currentGuessContainerElement.children[self.letterCounter];
         
-            letterItem.classList.add('pulse');
+            letterItem.classList.add('animation-pulse');
         
             letterItem.addEventListener('animationend', function (e) {
         
                 e.stopPropagation();
         
-                letterItem.classList.remove('pulse');
+                letterItem.classList.remove('animation-pulse');
         
             }, {once: true});
             
@@ -346,7 +346,7 @@ var Wordle = {
 
         deleteLetter: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             var currentGuessContainerElement = self.collection.getCurrentGuessContainerElement();
             
@@ -368,7 +368,7 @@ var Wordle = {
 
         onKeyUp: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             document.addEventListener('keyup', function (e) {
 
@@ -411,7 +411,7 @@ var Wordle = {
 
         onClickKeyPad: function () {
 
-            var self = Wordle;
+            var self = WordleJS;
 
             document.getElementById(self.elements.wjsKeyboardId).addEventListener('click', function (e) {
                 
@@ -425,13 +425,13 @@ var Wordle = {
                     return;
                 }
 
-                target.classList.add('pulse');
+                target.classList.add('animation-pulse');
         
                 target.addEventListener('animationend', function (e) {
             
                     e.stopPropagation();
             
-                    target.classList.remove('pulse');
+                    target.classList.remove('animation-pulse');
             
                 }, {once: true});
 
@@ -445,7 +445,7 @@ var Wordle = {
 
         onClickShareStats: function () {
          
-            var self = Wordle;
+            var self = WordleJS;
 
             document.getElementById(self.elements.wjsShareId).addEventListener('click', function (e) {
 

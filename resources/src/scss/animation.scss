@@ -1,5 +1,5 @@
 // ====== PULSE ANIMATION - START ======
-@keyframes pulse {
+@keyframes animation-kf-pulse {
     from {
         transform: scale3d(1, 1, 1);
     }
@@ -13,8 +13,8 @@
     }
 }
 
-.pulse {
-    animation-name: pulse;
+.animation-pulse {
+    animation-name: animation-kf-pulse;
     animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
 }

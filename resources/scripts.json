@@ -12,11 +12,11 @@
         "base_local_storage": "src/js/base_local_storage.js"
     },
     "components": {
-        "wordle": "src/js/components/wordle.js"
+        "wordlejs": "src/js/components/wordlejs.js"
     },
     "pages": {
-        "wordle": [
-            "src/js/pages/wordle.js"
+        "wordlejs": [
+            "src/js/pages/wordlejs.js"
         ]
     }
 }

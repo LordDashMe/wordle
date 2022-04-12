@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
         window.WNUM = Math.floor(window.WNUM / window._WS.length) * 1;
     }
 
-    Wordle.wjsn = window.WNUM;
+    WordleJS.wjsn = window.WNUM;
 
-    Wordle.lookUpCollection = window._WS;
+    WordleJS.lookUpCollection = window._WS;
 
     if (BaseLocalStorage.isSupported()) {
 
@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     };
 
-    Wordle.afterRenderCallback.push(function () {
+    WordleJS.afterRenderCallback.push(function () {
 
-        var self = Wordle;
+        var self = WordleJS;
 
         if (self.completedOn) {
             
@@ -77,21 +77,21 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.guessTryNotEnoughLettersCallback.push(function (remainingLetters) {
+    WordleJS.guessTryNotEnoughLettersCallback.push(function (remainingLetters) {
 
         alert('Provide the required number of letter(s) before submitting the guess. You have remaining ' + remainingLetters + ' letter(s).');
 
     });
 
-    Wordle.guessTryNotInWordListCallback.push(function () {
+    WordleJS.guessTryNotInWordListCallback.push(function () {
 
         alert('The word that you provided is invalid.');
 
     });
 
-    Wordle.gameOverWinCallback.push(function (correctWord) {
+    WordleJS.gameOverWinCallback.push(function (correctWord) {
 
-        var self = Wordle;
+        var self = WordleJS;
 
         self.wotd = correctWord;
 
@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.gameOverLoseCallback.push(function (correctWord) {
+    WordleJS.gameOverLoseCallback.push(function (correctWord) {
 
-        var self = Wordle;
+        var self = WordleJS;
 
         self.wotd = correctWord;
 
@@ -117,9 +117,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.shareStatsCallback.push(function () {
+    WordleJS.shareStatsCallback.push(function () {
 
-        var self = Wordle;
+        var self = WordleJS;
 
         var win = self.stats.winInGuesssNumber ? self.stats.winInGuesssNumber : 'X';
 
@@ -144,19 +144,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     });
 
-    Wordle.setWjsx(window._WS[window.WNUM]);
+    WordleJS.setWjsx(window._WS[window.WNUM]);
 
-    Wordle.events.onKeyUp();
+    WordleJS.events.onKeyUp();
 
-    Wordle.events.onClickKeyPad();
+    WordleJS.events.onClickKeyPad();
 
-    Wordle.events.onClickShareStats();
+    WordleJS.events.onClickShareStats();
     
-    Wordle.render();
+    WordleJS.render();
 
     document.getElementById('wjs_search_meaning').addEventListener('click', function (e) {
 
-        window.open('https://www.google.com.ph/search?q=' + Wordle.wotd + '+meaning', '_blank');
+        window.open('https://www.google.com.ph/search?q=' + WordleJS.wotd + '+meaning', '_blank');
 
     });
 

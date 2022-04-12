@@ -6,11 +6,11 @@
         "animation": "src/scss/animation.scss"
     },
     "components": {
-        "wordle": "src/scss/components/wordle.scss"
+        "wordlejs": "src/scss/components/wordlejs.scss"
     },
     "pages": {
-        "wordle": [
-            "src/scss/pages/wordle.scss"
+        "wordlejs": [
+            "src/scss/pages/wordlejs.scss"
         ]
     }
 }
