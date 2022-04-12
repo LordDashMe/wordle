@@ -294,6 +294,10 @@ var WordleJS = {
 
                 var currentBgColor = keypadsElement[x].getAttribute('data-bg-color');
 
+                if (currentBgColor === self.letterFlags.present.bgColor && bgColor === self.letterFlags.absent.bgColor) {
+                    continue;
+                }
+
                 if (currentBgColor !== self.letterFlags.correct.bgColor) {
                     keypadsElement[x].setAttribute('data-bg-color', bgColor);
                     keypadsElement[x].style.backgroundColor = bgColor;
