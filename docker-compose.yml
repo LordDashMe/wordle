@@ -1,4 +1,5 @@
-version: '3.4'
+version: '3.9'
+
 services:
   app:
     container_name: 'wordlejs_http'
@@ -7,6 +8,8 @@ services:
     image: 'php:7.2-apache'
     volumes:
       - '.:/var/www/html/'
+    networks:
+      - default
   resources:
     container_name: 'wordlejs_resources'
     tty: true
@@ -14,3 +17,9 @@ services:
     image: 'node:10-alpine'
     volumes:
       - './resources/:/var/www/resources/'
+    networks:
+      - default
+
+networks:
+  default: 
+    name: 'wordlejs_network'
