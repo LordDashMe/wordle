@@ -1,6 +1,6 @@
 {
   "name": "wordlejs",
-  "version": "0.0.1",
+  "version": "0.0.12",
   "description": "A simplified and pure JS implementation of Wordle.",
   "main": "index.js",
   "scripts": {
