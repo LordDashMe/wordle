@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
         window.WNUM = Math.floor(window.WNUM / window._WS.length) * 1;
     }
 
+    window.WNUM = Math.floor(window.WNUM);
+
     WordleJS.wjsn = window.WNUM;
 
     WordleJS.lookUpCollection = window._WS;
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     WordleJS.events.onClickKeyPad();
 
     WordleJS.events.onClickShareStats();
-    
+
     WordleJS.render();
 
     document.getElementById('wjs_search_meaning').addEventListener('click', function (e) {
